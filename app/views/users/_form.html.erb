@@ -44,14 +44,14 @@
       <div class="col-1">
         <span class="form-check">
           <%= f.label :terms_of_use, 'Yes', class: 'form-label' %>
-          <%= f.radio_button :terms_of_use, 'Yes', class: 'form-check-input' %>
+          <%= f.radio_button :terms_of_use, true, class: 'form-check-input' %>
         </span>
       </div>
 
       <div class="col-1">
         <span class="form-check">
           <%= f.label :terms_of_use, 'No', class: 'form-label' %>
-          <%= f.radio_button :terms_of_use, 'No', class: 'form-check-input' %>
+          <%= f.radio_button :terms_of_use, false, class: 'form-check-input' %>
         </span>
       </div>
     </div>
@@ -124,7 +124,7 @@
 
   <div class="row float-end">
     <span class="action-buttons">
-      <%= link_to 'Back', :back, class: 'btn btn-lg btn-primary' %>
+      <%= link_to 'Back', users_path, class: 'btn btn-lg btn-secondary' %>
       <%= f.button :submit, class: 'btn btn-lg btn-success' %>
     </span>
   </div>

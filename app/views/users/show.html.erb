@@ -1,17 +1,19 @@
-<strong>Email:</strong>
-<%= @users.email %>
+<strong>მეილი:</strong>
+<%= @user.email %>
 <br>
-<strong>Username:</strong>
-<%= @users.username %>
+<strong>სახელი:</strong>
+<%= @user.username %>
 <br>
-<strong>Pin:</strong>
-<%= @users.pin %>
+<strong>პირადი ნომერი:</strong>
+<%= @user.pin %>
 <br>
-<strong>country_id:</strong>
-<%= @users.country_id %>
+<strong>ქვეყანა:</strong>
+<%= @user.country.name %>
 <br>
-<strong>city_id:</strong>
-<%= @users.city_id %>
+<strong>ქალაქი:</strong>
+<%= @user.city.name %>
 <br>
-<strong>terms_of_use:</strong>
-<%= @users.terms_of_use %>
+<strong>ეთანხმები წესებს ?:</strong>
+<%= @user.terms_of_use %>
+<br>
+<%= link_to 'back', users_path, class: "btn btn-secondary" %>

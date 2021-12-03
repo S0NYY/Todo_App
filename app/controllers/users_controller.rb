@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   layout 'simple'
 
   before_action :set_default_country, only: %i[new create show edit update destroy]
+  before_action :set_default_city, only: %i[edit]
 
   def index
     @users = User.all
@@ -13,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @users = User.find(params[:id])
+    @user = User.find(params[:id])
     @profile = User.find(params[:id])
   end
 
@@ -39,7 +40,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @profile = Profile.find_by(user_id: params[:id])
 
-    if @user.update(user_params) || @profile.update(profile_params)
+    if @user.update(user_params) && @profile.update(profile_params)
       redirect_to @user
     else
       redirect_to edit_user_path
@@ -48,6 +49,9 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id]).destroy
+    respond_to do |format|
+    format.html { redirect_to users_url, notice: "წარმატებით წაიშალა." }
+    end
   end
 
 
@@ -56,7 +60,14 @@ class UsersController < ApplicationController
   def set_default_country
     @countries = Country.all
     @cities = []
+    end
+
+  def set_default_city
+    @user = User.find(params[:id])
+    @cities = City.where(country_id: @user.country_id)
   end
+
+
 
   def user_params
     params.require(:user).permit(:email, :username, :pin, :terms_of_use, :country_id, :city_id)
