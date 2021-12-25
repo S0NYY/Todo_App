@@ -1,0 +1,69 @@
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.collection_select :user_id, @users, :user_id, :full_name %>
+  </div>
+
+  <% if @current_user&.is_admin? %>
+
+    <div class="field">
+      <%= form.label :moderator_id  %>
+      <%= form.collection_select :moderator_id, @users, :user_id, :full_name %>
+    </div>
+
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </div>
+
+  <% if @current_user&.is_admin? %>
+
+    <div class="field">
+      <%= form.label :cancellation_reason %>
+      <%= form.text_field :cancellation_reason %>
+    </div>
+
+  <% else %>
+
+  <div class="field">
+    <%= form.label :scheduled_at %>
+    <%= form.datetime_field :scheduled_at %>
+  </div>
+
+  <% end %>
+
+  <div class="actions">
+    <% if @current_user&.is_admin? %>
+
+      <%= form.button 'Publish', name: "commit", value: 'published', class: 'btn btn-success' %>
+      <%= form.button 'Cancel', name: "commit", value: 'canceled', class: 'btn btn-danger' %>
+
+    <% else %>
+
+      <%= form.submit 'Update Post', class: 'btn btn-primary' %>
+      <%= form.button 'Moderation', name: "commit", value: 'moderation', class: 'btn btn-warning' %>
+      <%= form.button  'Schedule Moderation', name: "commit", value: 'scheduled', class: 'btn btn-warning' %>
+
+    <% end %>
+  </div>
+<% end %>
